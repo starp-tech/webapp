@@ -1,0 +1,11 @@
+node_modules/
+
+src/*.js
+src/**/*.js
+
+.env
+dist
+
+.DS_Store
+
+wrangler.toml
