@@ -28,65 +28,8 @@
 </script>
 <script type="text/javascript" src="https://www.starpy.me/js/socket.js">
 </script>
-</script>
-<script type="text/javascript" src="https://www.starpy.me/js/media.js">
-</script>
-<script type="text/javascript" src="https://www.starpy.me/js/auth.js">
-</script>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdmg-M42WaSQacbWa_-45mnhLPl5agzBE",
-    authDomain: "starpy.firebaseapp.com",
-    projectId: "starpy",
-    storageBucket: "starpy.appspot.com",
-    messagingSenderId: "1012103782424",
-    appId: "1:1012103782424:web:119d7746a26fbbe688636d",
-    measurementId: "G-TGXM40S8J8"
-  };
-
-  const signInWithEmail = async () => {
-    
-    console.info('==== try email ====')
-
-    let email = emailInput.value
-    
-    console.info(email)
-
-    if (!email) {
-      email = window.prompt('Please provide your email for confirmation');
-    }
-
-    try {
-      setIsLoading(true)
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings)
-      console.info('==== after succesfully send email =====')
-      window.localStorage.setItem('emailForSignIn', email);
-    } catch(err) {
-      console.error(err)
-    }
-  }
-
-  const checkAuthOnMount = async () => {
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let email = window.localStorage.getItem('emailForSignIn');
-      if (!email) {
-        email = window.prompt('Please provide your email for confirmation');
-      }
-      const result = await signInWithEmailLink(auth, email, window.location.href)
-      console.info('===== succesfully loggedin with email link ====', result)
-    }
-  }
-  checkAuthOnMount()
-</script>
+<script type="text/javascript" src="https://www.starpy.me/js/media.js"></script>
+<script type="text/javascript" src="https://www.starpy.me/js/auth.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
