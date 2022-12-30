@@ -4,17 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">     
   <title> Starpy Web App </title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha512-2cbsQGdowNDPcKuoBd2bCcsJky87Mv0LEtD/nunJUgk6MOYTgVMGihS/xCEghNf04DPhNiJ4DZw5BxDd1uyOdw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.9.6/webtorrent.min.js" integrity="sha512-XF9ds+vUoIZQm451mANDmt7l9JeuCrNWNwSFjQrtp6Vsme9+qlCanROSUNrskIAtJhMEghJ+u3HdxGNB/FcG+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-      <div id="root" 
-      style="
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        display: flex;
-      "></div>
+  <div 
+  id="root" 
+  style="
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: flex;
+  "></div>
 </body>
 <script type="text/javascript" src="./bundle.web.js"></script>
+<script type="text/javascript" src="https://www.starpy.me/js/contact.js">
+</script>
+<script type="text/javascript" src="https://www.starpy.me/js/resize.js">
+</script>
+<script type="text/javascript" src="https://www.starpy.me/js/socket.js">
+</script>
+</script>
+<script type="text/javascript" src="https://www.starpy.me/js/media.js">
+</script>
+<script type="text/javascript" src="https://www.starpy.me/js/auth.js">
+</script>
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
@@ -35,9 +53,40 @@
     measurementId: "G-TGXM40S8J8"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app)
+  const signInWithEmail = async () => {
+    
+    console.info('==== try email ====')
+
+    let email = emailInput.value
+    
+    console.info(email)
+
+    if (!email) {
+      email = window.prompt('Please provide your email for confirmation');
+    }
+
+    try {
+      setIsLoading(true)
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings)
+      console.info('==== after succesfully send email =====')
+      window.localStorage.setItem('emailForSignIn', email);
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
+  const checkAuthOnMount = async () => {
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      let email = window.localStorage.getItem('emailForSignIn');
+      if (!email) {
+        email = window.prompt('Please provide your email for confirmation');
+      }
+      const result = await signInWithEmailLink(auth, email, window.location.href)
+      console.info('===== succesfully loggedin with email link ====', result)
+    }
+  }
+  checkAuthOnMount()
 </script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
