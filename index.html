@@ -8,14 +8,11 @@
   <meta name="description" content="starpy app - collaborative media sharing video player online, offline and private">
   <meta name=”robots” content="index, follow">   
   <title> Starpy Web App </title>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha512-2cbsQGdowNDPcKuoBd2bCcsJky87Mv0LEtD/nunJUgk6MOYTgVMGihS/xCEghNf04DPhNiJ4DZw5BxDd1uyOdw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.9.6/webtorrent.min.js" integrity="sha512-XF9ds+vUoIZQm451mANDmt7l9JeuCrNWNwSFjQrtp6Vsme9+qlCanROSUNrskIAtJhMEghJ+u3HdxGNB/FcG+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+  
+	<script src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="https://www.starpy.me/css/style.css">
-  <link rel="stylesheet" href="https://www.starpy.me/css/nav.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="https://www.starpy.me/minimal-pace.css">
 </head>
 
@@ -28,36 +25,48 @@
     position: fixed;
     display: flex;
   "></div>
-<input class="hidden" id="hackingFileInput" type="file">
+  <div 
+  id="chatroot" 
+  style="
+    height: 400px;
+    width: 400px;
+    position: fixed;
+    /* display: flex; */
+    display: none;
+  "></div>
+  <input class="hidden" id="hackingFileInput" type="file">
 
-<div 
-class="hidden"
-id="videoContainer"
->
-<h1 id="partyTitle"></h1>
-<h2 id="videoTitle"></h2>
-<h3 id="videoLoadProgress"></h3>
-<a href="#videoPlayer" class="close" onclick="hideVideoPlayer()"></a>
-<div id="playerPlayButton" onclick="togglePlay()" class="hidden"></div>
-<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
-</a>
-<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
-</a>
-<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	<div 
+		class="hidden"
+		id="videoContainer"
+	>
+		<h1 id="partyTitle"></h1>
+		<h2 id="videoTitle"></h2>
+		<h3 id="videoLoadProgress"></h3>
+		<div class="close" onclick="hideVideoPlayer()"></div>
+		<div id="playerPlayButton" onclick="togglePlay()" class="hidden"></div>
+  	<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
+    </a>
+  	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
+    </a>
+    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
-<video id="videoPlayer" onclick="togglePlay()" src="" autoplay playsinline></video>
-<div id="chatContainer"></div>
-</div>
+		<video id="videoPlayer" onclick="togglePlay()" src="" autoplay controls playsinline type="video/mp4">
+      <!-- <source id="videoPlayerSource" src="" type="video/mp4"> -->
+    </video>
+		<div id="chatContainer"></div>
+	</div>
 
 </body>
-<script type="text/javascript" src="./bundle.web.js"></script>
+<script type="text/javascript" src="/bundle.web.js"></script>
+<script type="text/javascript" src="/bundle.chat.js"></script>
 <script type="text/javascript" src="https://www.starpy.me/js/contact.js">
 </script>
 <script type="text/javascript" src="https://www.starpy.me/js/resize.js">
 </script>
-<script type="text/javascript" src="https://www.starpy.me/js/socket.js">
+<script type="text/javascript" src="/js/socket.js">
 </script>
-<script type="text/javascript" src="https://www.starpy.me/js/media.js"></script>
+<script type="text/javascript" src="/js/media.js"></script>
 <script 
   type="text/javascript" 
   src="https://www.starpy.me/js/auth.js" 
