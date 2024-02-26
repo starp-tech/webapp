@@ -34,7 +34,6 @@
     /* display: flex; */
     display: none;
   "></div>
-  <input class="hidden" id="hackingFileInput" type="file">
 
 	<div 
 		class="hidden"
@@ -44,14 +43,10 @@
 		<h2 id="videoTitle"></h2>
 		<h3 id="videoLoadProgress"></h3>
 		<div class="close" onclick="hideVideoPlayer()"></div>
-		<div id="playerPlayButton" onclick="togglePlay()" class="hidden"></div>
-  	<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
-    </a>
-  	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
-    </a>
+		<div id="playerPlayButton" class="hidden"></div>
     <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
-		<video id="videoPlayer" onclick="togglePlay()" src="" autoplay controls playsinline type="video/mp4">
+		<video id="videoPlayer" src="" autoplay controls playsinline type="video/mp4">
       <!-- <source id="videoPlayerSource" src="" type="video/mp4"> -->
     </video>
 		<div id="chatContainer"></div>
