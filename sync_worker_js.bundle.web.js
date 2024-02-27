@@ -182,7 +182,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _evo
 /******/ 		// object to store loaded chunks
 /******/ 		// "1" means "already loaded"
 /******/ 		var installedChunks = {
-/******/ 			"nsync_worker_js": 1
+/******/ 			"sync_worker_js": 1
 /******/ 		};
 /******/ 		
 /******/ 		// importScripts chunk loading
