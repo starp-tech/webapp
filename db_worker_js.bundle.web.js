@@ -7,7 +7,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-(self["webpackChunkStarpyApp"] = self["webpackChunkStarpyApp"] || []).push([["db_worker_js"],{
+(self["webpackChunkStarpyApp"] = self["webpackChunkStarpyApp"] || []).push([["node_modules_evolu_common-web_dist_DbWorker_js"],{
 
 /***/ "./node_modules/@evolu/common-web/dist/DbWorker.js":
 /*!*********************************************************!*\
