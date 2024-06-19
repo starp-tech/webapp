@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/bundle.web.179.js",
-    "bundle.web.726.js": "/bundle.web.726.js",
-    "bundle.web.431.js": "/bundle.web.431.js",
-    "bundle.web.775.js": "/bundle.web.775.js",
-    "bundle.web.820.js": "/bundle.web.820.js",
-    "bundle.web.74.js": "/bundle.web.74.js",
-    "bundle.web.933.js": "/bundle.web.933.js",
-    "bundle.web.997.js": "/bundle.web.997.js",
-    "bundle.web.803.js": "/bundle.web.803.js",
+    "main.js": "/main.js",
+    "726.js": "/726.js",
+    "431.js": "/431.js",
+    "775.js": "/775.js",
+    "820.js": "/820.js",
+    "74.js": "/74.js",
+    "933.js": "/933.js",
+    "997.js": "/997.js",
+    "803.js": "/803.js",
     "MaterialCommunityIcons.ttf": "/5d42b4e60858731e7b65.ttf",
     "sqlite3.wasm": "/4df5e7af1d8a6b183755.wasm",
     "Ionicons.ttf": "/9b6b1954a5eb6efeaf11.ttf",
@@ -21,20 +21,20 @@
     "favicon-16.png": "/favicon-16.png",
     "../web-build/serve.json": "/../web-build/serve.json",
     "javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/1feff74faaf0efc6a044",
-    "bundle.web.179.js.map": "/bundle.web.179.js.map",
-    "bundle.web.726.js.map": "/bundle.web.726.js.map",
-    "bundle.web.431.js.map": "/bundle.web.431.js.map",
-    "bundle.web.775.js.map": "/bundle.web.775.js.map",
-    "bundle.web.820.js.map": "/bundle.web.820.js.map",
-    "bundle.web.74.js.map": "/bundle.web.74.js.map",
-    "bundle.web.933.js.map": "/bundle.web.933.js.map",
-    "bundle.web.997.js.map": "/bundle.web.997.js.map",
-    "bundle.web.803.js.map": "/bundle.web.803.js.map"
+    "main.js.map": "/main.js.map",
+    "726.js.map": "/726.js.map",
+    "431.js.map": "/431.js.map",
+    "775.js.map": "/775.js.map",
+    "820.js.map": "/820.js.map",
+    "74.js.map": "/74.js.map",
+    "933.js.map": "/933.js.map",
+    "997.js.map": "/997.js.map",
+    "803.js.map": "/803.js.map"
   },
   "entrypoints": [
-    "bundle.web.74.js",
-    "bundle.web.997.js",
-    "bundle.web.803.js",
-    "bundle.web.179.js"
+    "74.js",
+    "997.js",
+    "803.js",
+    "main.js"
   ]
 }
