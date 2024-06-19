@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.js": "/bundle.web.179.js",
+    "bundle.web.726.js": "/bundle.web.726.js",
+    "bundle.web.431.js": "/bundle.web.431.js",
+    "bundle.web.775.js": "/bundle.web.775.js",
+    "bundle.web.820.js": "/bundle.web.820.js",
+    "bundle.web.74.js": "/bundle.web.74.js",
+    "bundle.web.933.js": "/bundle.web.933.js",
+    "bundle.web.997.js": "/bundle.web.997.js",
+    "bundle.web.803.js": "/bundle.web.803.js",
+    "MaterialCommunityIcons.ttf": "/5d42b4e60858731e7b65.ttf",
+    "sqlite3.wasm": "/4df5e7af1d8a6b183755.wasm",
+    "Ionicons.ttf": "/9b6b1954a5eb6efeaf11.ttf",
+    "favicon.ico": "/favicon.ico",
+    "../web-build/webpack.config.js": "/../web-build/webpack.config.js",
+    "../web-build/chat.config.js": "/../web-build/chat.config.js",
+    "../web-build/index.html": "/../web-build/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "manifest.json": "/manifest.json",
+    "favicon-16.png": "/favicon-16.png",
+    "../web-build/serve.json": "/../web-build/serve.json",
+    "javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/1feff74faaf0efc6a044",
+    "bundle.web.179.js.map": "/bundle.web.179.js.map",
+    "bundle.web.726.js.map": "/bundle.web.726.js.map",
+    "bundle.web.431.js.map": "/bundle.web.431.js.map",
+    "bundle.web.775.js.map": "/bundle.web.775.js.map",
+    "bundle.web.820.js.map": "/bundle.web.820.js.map",
+    "bundle.web.74.js.map": "/bundle.web.74.js.map",
+    "bundle.web.933.js.map": "/bundle.web.933.js.map",
+    "bundle.web.997.js.map": "/bundle.web.997.js.map",
+    "bundle.web.803.js.map": "/bundle.web.803.js.map"
+  },
+  "entrypoints": [
+    "bundle.web.74.js",
+    "bundle.web.997.js",
+    "bundle.web.803.js",
+    "bundle.web.179.js"
+  ]
+}
