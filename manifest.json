@@ -8,12 +8,12 @@
   "related_applications": [
     {
       "platform": "itunes",
-      "id": "com.evolu.evolu"
+      "id": "me.starpy.complex"
     },
     {
       "platform": "play",
-      "url": "http://play.google.com/store/apps/details?id=com.evolu.evolu",
-      "id": "com.evolu.evolu"
+      "url": "http://play.google.com/store/apps/details?id=com.starpy.me",
+      "id": "com.starpy.me"
     }
   ],
   "prefer_related_applications": true
