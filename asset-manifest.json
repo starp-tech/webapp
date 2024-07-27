@@ -7,10 +7,10 @@
     "339.js": "/339.js",
     "783.js": "/783.js",
     "104.js": "/104.js",
-    "681.js": "/681.js",
+    "122.js": "/122.js",
     "960.js": "/960.js",
     "588.js": "/588.js",
-    "335.js": "/335.js",
+    "68.js": "/68.js",
     "MaterialCommunityIcons.ttf": "/5d42b4e60858731e7b65.ttf",
     "sqlite3.wasm": "/4df5e7af1d8a6b183755.wasm",
     "Ionicons.ttf": "/9b6b1954a5eb6efeaf11.ttf",
@@ -28,15 +28,15 @@
     "339.js.map": "/339.js.map",
     "783.js.map": "/783.js.map",
     "104.js.map": "/104.js.map",
-    "681.js.map": "/681.js.map",
+    "122.js.map": "/122.js.map",
     "960.js.map": "/960.js.map",
     "588.js.map": "/588.js.map",
-    "335.js.map": "/335.js.map"
+    "68.js.map": "/68.js.map"
   },
   "entrypoints": [
-    "681.js",
+    "122.js",
     "588.js",
-    "335.js",
+    "68.js",
     "main.js"
   ]
 }
