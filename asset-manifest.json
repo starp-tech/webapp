@@ -10,23 +10,16 @@
     "122.js": "/122.js",
     "960.js": "/960.js",
     "588.js": "/588.js",
-    "424.js": "/424.js",
-    "static/css/424.e26b9d4e.css": "/static/css/424.e26b9d4e.css",
+    "484.js": "/484.js",
     "MaterialCommunityIcons.ttf": "/n01_5d42b4e60858731e7b65_.ttf",
     "sqlite3.wasm": "/n01_4df5e7af1d8a6b183755_.wasm",
     "Ionicons.ttf": "/n01_9b6b1954a5eb6efeaf11_.ttf",
     "favicon.ico": "/favicon.ico",
     "../web-build/index.html": "/../web-build/index.html",
-    "CjTZ0GgLRekNGpwAsYABHIypcAgQMsITDtWJYBR6NSqMico9cqR6tKfY7GeBCuVwlipDNmefAtTrkSzB1RaIAoXodsABiZAEFB06gIBWC1mLVgBa0AAOw==": "/n01_9e1f2489b83296aff77e_.gif",
     "favicon-32.png": "/favicon-32.png",
     "manifest.json": "/manifest.json",
-    "iBcwiDAo7WiBeawa+Kwh7tZoSCGLMqwlSAzVDhoK+6vH4G0P5wdkAAAAASUVORK5CYII=": "/n01_75d10b93355eb5b50622_.png",
     "favicon-16.png": "/favicon-16.png",
-    "svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBpZD0iZTkzOWQwODYtNjM4Zi00OTk2LTg3ZmMtYzhmOGUyZTc2ZWQ4IiBkYXRhLW5hbWU9IkxheWVyIDEiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0MCI+PHJlY3Qgd2lkdGg9IjcwIiBoZWlnaHQ9IjQwIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIHN0cm9rZT0icmdiYSgwLDAsMCwwLjUpIi8+PC9zdmc+": "/n01_f46de8ca7081242832eb_.svg",
-    "KemIfOJCUB+Aoacx6EGBZyHBqI+WsDCwuQ9mhxeg2A210Ntfo8klk9sOMijaURm7yc1UP2RNCMbKE9ODK1HM6iegYLkfx8pligC9lCD7KmRof0ZhjQACDAAceovrtpVBRkAAAAASUVORK5CYII=": "/n01_76f7a2bb4291c966e23d_.png",
     "../web-build/serve.json": "/../web-build/serve.json",
-    "svg%3E": "/n01_1ea2135d52968f2c9e7d_.svg",
-    "png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==": "/n01_4bde4ae8f032f7782cf9_.png",
     "javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/n01_1feff74faaf0efc6a044_",
     "main.js.map": "/main.js.map",
     "999.js.map": "/999.js.map",
@@ -38,14 +31,12 @@
     "122.js.map": "/122.js.map",
     "960.js.map": "/960.js.map",
     "588.js.map": "/588.js.map",
-    "424.js.map": "/424.js.map",
-    "424.e26b9d4e.css.map": "/static/css/424.e26b9d4e.css.map"
+    "484.js.map": "/484.js.map"
   },
   "entrypoints": [
     "122.js",
     "588.js",
-    "424.js",
-    "static/css/424.e26b9d4e.css",
+    "484.js",
     "main.js"
   ]
 }
