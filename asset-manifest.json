@@ -11,7 +11,7 @@
     "122.js": "/122.js",
     "960.js": "/960.js",
     "588.js": "/588.js",
-    "180.js": "/180.js",
+    "679.js": "/679.js",
     "MaterialCommunityIcons.ttf": "/n01_5d42b4e60858731e7b65_.ttf",
     "sqlite3.wasm": "/n01_4df5e7af1d8a6b183755_.wasm",
     "Ionicons.ttf": "/n01_9b6b1954a5eb6efeaf11_.ttf",
@@ -33,12 +33,12 @@
     "122.js.map": "/122.js.map",
     "960.js.map": "/960.js.map",
     "588.js.map": "/588.js.map",
-    "180.js.map": "/180.js.map"
+    "679.js.map": "/679.js.map"
   },
   "entrypoints": [
     "122.js",
     "588.js",
-    "180.js",
+    "679.js",
     "main.js"
   ]
 }
