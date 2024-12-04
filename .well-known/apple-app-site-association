@@ -1,0 +1,24 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [ "AMBX5RX244.me.starpy.complex"],
+        "components":[
+          {
+            "/": "/webapp/*",
+            "comment": "Matches any URL with a path that starts with /webapp/."
+         }
+        ]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": ["AMBX5RX244.me.starpy.complex"]
+  },
+  "appclips":{
+    "apps": ["AMBX5RX244.me.starpy.complex"]
+  },
+  "webcredentials": {
+    "apps": ["AMBX5RX244.me.starpy.complex"]
+  }
+}
