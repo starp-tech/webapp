@@ -124,7 +124,7 @@
       }
 
       50% {
-        transform: translateY(-20px) rotate(5deg);
+        transform: translateY(-10px) rotate(0deg);
       }
     }
 
@@ -136,7 +136,7 @@
       }
 
       50% {
-        transform: rotate(75deg);
+        transform: rotate(55deg);
       }
     }
 
@@ -148,7 +148,7 @@
       }
 
       50% {
-        transform: rotate(-75deg);
+        transform: rotate(-55deg);
       }
     }
 
@@ -168,18 +168,18 @@
       }
 
       100% {
-        transform: translateY(100%);
+        transform: translateY(60%);
       }
     }
 
     .blade-top {
       transform-origin: 35% 35%;
-      animation: cut 3.2s ease-in-out infinite;
+      animation: cut 2.5s ease-in-out infinite;
     }
 
     .blade-bottom {
       transform-origin: 35% 65%;
-      animation: cut-in 3.2s ease-in-out infinite reverse;
+      animation: cut-in 2.5s ease-in-out infinite reverse;
     }
 
     .app-name {
@@ -279,6 +279,25 @@
       animation: fadeIn 0.2s ease-out forwards 0.5s;
       text-align: center;
     }
+    @media screen and (max-width: 700px) {
+      .scissors {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .film-strip {
+        stroke: var(--colors-primary);
+        stroke-width: 2;
+        fill: none;
+      }
+      .app-name {
+        /* position: absolute;
+        bottom: 20%; */
+        padding-top:calc(100%);
+      }
+    }
   </style>
 </head>
 
@@ -301,7 +320,7 @@
       <svg class="scissors scissors-animated" id="working-tape" viewBox="0 0 100 100">
         <g class="film-strip-container">
           <g class="film-strip film-strip-animated">
-            <rect x="45" y="-100" width="10" height="300" stroke-dasharray="4 4" />
+            <rect x="45" y="-100" width="10" height="400" stroke-dasharray="4 4" />
             <circle class="holes" cx="50" y="-90" r="2" />
             <circle class="holes" cx="50" y="-80" r="2" />
             <circle class="holes" cx="50" y="-70" r="2" />
@@ -331,6 +350,26 @@
             <circle class="holes" cx="50" y="170" r="2" />
             <circle class="holes" cx="50" y="180" r="2" />
             <circle class="holes" cx="50" y="190" r="2" />
+            <circle class="holes" cx="50" y="200" r="2" />
+            <circle class="holes" cx="50" y="210" r="2" />
+            <circle class="holes" cx="50" y="220" r="2" />
+            <circle class="holes" cx="50" y="230" r="2" />
+            <circle class="holes" cx="50" y="240" r="2" />
+            <circle class="holes" cx="50" y="250" r="2" />
+            <circle class="holes" cx="50" y="260" r="2" />
+            <circle class="holes" cx="50" y="270" r="2" />
+            <circle class="holes" cx="50" y="280" r="2" />
+            <circle class="holes" cx="50" y="290" r="2" />
+            <circle class="holes" cx="50" y="300" r="2" />
+            <circle class="holes" cx="50" y="310" r="2" />
+            <circle class="holes" cx="50" y="320" r="2" />
+            <circle class="holes" cx="50" y="330" r="2" />
+            <circle class="holes" cx="50" y="340" r="2" />
+            <circle class="holes" cx="50" y="350" r="2" />
+            <circle class="holes" cx="50" y="360" r="2" />
+            <circle class="holes" cx="50" y="370" r="2" />
+            <circle class="holes" cx="50" y="380" r="2" />
+            <circle class="holes" cx="50" y="390" r="2" />
           </g>
         </g>
         <g class="blade-top">
