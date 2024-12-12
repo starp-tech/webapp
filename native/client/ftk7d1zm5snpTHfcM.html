@@ -1,0 +1,298 @@
+<html><head><base href="https://noir-elite-models.com/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Noir Elite Models - Exclusive Photo Stock</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #000;
+        color: #fff;
+        overflow-x: hidden;
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background-color: rgba(0,0,0,0.8);
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+    .category-filter {
+        display: flex;
+        gap: 20px;
+    }
+    .category-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+    .category-btn:hover, .category-btn.active {
+        color: #gold;
+    }
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 10px;
+        padding: 80px 10px 10px;
+    }
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 1;
+        cursor: pointer;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+    .gallery-item::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover::after {
+        opacity: 1;
+    }
+    .item-info {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        z-index: 2;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+    .gallery-item:hover .item-info {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .model-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .model-popup.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .popup-content {
+        background-color: #111;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 80%;
+        max-height: 80%;
+        overflow-y: auto;
+        position: relative;
+    }
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .model-image {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+    .model-details {
+        margin-bottom: 20px;
+    }
+    .add-to-cart-btn {
+        background-color: #gold;
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .add-to-cart-btn:hover {
+        background-color: #e6c200;
+    }
+    .cart {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #gold;
+        color: #000;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 101;
+    }
+    .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: #fff;
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @keyframes addToCart {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    .cart.animate {
+        animation: addToCart 0.5s ease;
+    }
+</style></head><body>
+    <header class="header">
+        <div class="logo">NOIR ELITE MODELS</div>
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="fashion">Fashion</button>
+            <button class="category-btn" data-category="editorial">Editorial</button>
+            <button class="category-btn" data-category="commercial">Commercial</button>
+        </div>
+    </header>
+
+    <div class="gallery" id="gallery">
+        <!-- Gallery items will be dynamically added here -->
+    </div>
+
+    <div class="model-popup" id="modelPopup">
+        <div class="popup-content">
+            <button class="close-popup">&times;</button>
+            <img class="model-image" id="popupImage" src="" alt="">
+            <div class="model-details" id="modelDetails"></div>
+            <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="cart" id="cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+        const modelPopup = document.getElementById('modelPopup');
+        const popupImage = document.getElementById('popupImage');
+        const modelDetails = document.getElementById('modelDetails');
+        const cartCount = document.getElementById('cartCount');
+        const cart = document.getElementById('cart');
+
+        const models = [
+            { name: 'Aria', category: 'fashion', image: 'https://example.com/aria.jpg', description: 'Elegant and poised, Aria brings haute couture to life.' },
+            { name: 'Zephyr', category: 'editorial', image: 'https://example.com/zephyr.jpg', description: 'With an ethereal presence, Zephyr embodies artistic expression.' },
+            { name: 'Nova', category: 'commercial', image: 'https://example.com/nova.jpg', description: 'Vibrant and versatile, Nova is the face of modern advertising.' },
+            { name: 'Onyx', category: 'fashion', image: 'https://example.com/onyx.jpg', description: 'Bold and striking, Onyx commands attention on any runway.' },
+            { name: 'Luna', category: 'editorial', image: 'https://example.com/luna.jpg', description: 'Mysterious and alluring, Luna tells stories through her gaze.' },
+            { name: 'Atlas', category: 'commercial', image: 'https://example.com/atlas.jpg', description: 'Strong and charismatic, Atlas sells lifestyle with authenticity.' },
+            // Add more models as needed
+        ];
+
+        function createGalleryItem(model) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.setAttribute('data-category', model.category);
+            item.innerHTML = `
+                <img src="${model.image}" alt="${model.name}">
+                <div class="item-info">
+                    <h3>${model.name}</h3>
+                    <p>${model.category}</p>
+                </div>
+            `;
+            item.addEventListener('click', () => showModelPopup(model));
+            return item;
+        }
+
+        function showModelPopup(model) {
+            popupImage.src = model.image;
+            popupImage.alt = model.name;
+            modelDetails.innerHTML = `
+                <h2>${model.name}</h2>
+                <p>${model.description}</p>
+                <p>Category: ${model.category}</p>
+            `;
+            modelPopup.classList.add('active');
+        }
+
+        function addToCart() {
+            let count = parseInt(cartCount.textContent);
+            cartCount.textContent = ++count;
+            cart.classList.add('animate');
+            setTimeout(() => cart.classList.remove('animate'), 500);
+            modelPopup.classList.remove('active');
+        }
+
+        models.forEach(model => gallery.appendChild(createGalleryItem(model)));
+
+        document.querySelector('.close-popup').addEventListener('click', () => {
+            modelPopup.classList.remove('active');
+        });
+
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.getAttribute('data-category');
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterGallery(category);
+            });
+        });
+
+        function filterGallery(category) {
+            const items = gallery.getElementsByClassName('gallery-item');
+            Array.from(items).forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body></html>

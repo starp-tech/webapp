@@ -1,0 +1,1653 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fractal Shaper</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #bb86fc;
+      --secondary-color: #03dac6;
+      --error-color: #cf6679;
+      --chip-bg: #1f1f1f;
+      --chip-active-bg: #3700b3;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .blur-background {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .wallet-info {
+      background-color: var(--chip-bg);
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .category-chip {
+      background-color: var(--chip-bg);
+      color: var(--text-color);
+      padding: 5px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .category-chip.active {
+      background-color: var(--chip-active-bg);
+      color: var(--text-color);
+    }
+
+    .category-chip:hover {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      justify-content: space-between;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .product-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+
+    .product-price {
+      font-size: 16px;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .load-more {
+      display: block;
+      margin: 20px auto;
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .load-more:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .cart-button,
+    .order-button {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-button:hover,
+    .order-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: var(--error-color);
+      color: var(--bg-color);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .popup {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: none;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .purchase-button,
+    .confirm-delivery-button,
+    .receive-order-button {
+      background-color: var(--secondary-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .purchase-button:hover,
+    .confirm-delivery-button:hover,
+    .receive-order-button:hover {
+      background-color: var(--primary-color);
+    }
+
+    .delivery-address {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid var(--primary-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .rating {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .star {
+      font-size: 24px;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .star.active {
+      color: #ffd700;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-10px);
+      }
+
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .bounce {
+      animation: bounce 0.5s;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    @keyframes delivery {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .delivery-animation {
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      margin: 20px auto;
+      animation: delivery 2s linear infinite;
+    }
+
+    @keyframes coin-spin {
+      0% {
+        transform: rotateY(0deg);
+      }
+
+      100% {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .coin {
+      width: 50px;
+      height: 50px;
+      background-color: gold;
+      border-radius: 50%;
+      margin: 10px;
+      display: inline-block;
+      animation: coin-spin 1s linear infinite;
+    }
+
+    .chat-button {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .chat-popup {
+      position: fixed;
+      left: 20px;
+      bottom: 90px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      height: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: none;
+      flex-direction: column;
+      animation: slideUp 0.3s ease;
+    }
+
+    .chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+    }
+
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 5px 0 0 5px;
+      border: 1px solid var(--primary-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .chat-input button {
+      padding: 10px;
+      border-radius: 0 5px 5px 0;
+      border: 1px solid var(--primary-color);
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      cursor: pointer;
+    }
+
+    .password-modal {
+      display: flex;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-modal-content {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid var(--primary-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .password-submit {
+      background-color: var(--secondary-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .password-submit:hover {
+      background-color: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+
+      .popup,
+      .chat-popup {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+      }
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    #controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(10, 10, 30, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #00ffdd;
+      font-size: 24px;
+    }
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #00ffdd;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      background: #1a1a40;
+      -webkit-appearance: none;
+      outline: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    input[type="range"]:hover {
+      opacity: 1;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #00ffdd;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #00ffdd;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    button {
+      background-color: #00ffdd;
+      color: #050510;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #00ccbb;
+    }
+
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: #00ffdd;
+    }
+
+    #audioVisualization {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 50px;
+      background-color: rgba(10, 10, 30, 0.8);
+      border-radius: 10px;
+    }
+    .crosssign {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      position: relative;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+
+    .crosssign_circle {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background-color: red;
+      border-radius: 11px;
+      left: 0;
+      top: 0;
+    }
+
+    .crosssign_stem,
+    .crosssign_stem2 {
+      position: absolute;
+      background-color: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .crosssign_stem {
+      width: 3px;
+      height: 9px;
+    }
+
+    .crosssign_stem2 {
+      width: 9px;
+      height: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="metamask-modal" class="modal" style="display: hidden;">
+    <div class="modal-content">
+      <h2>MetaMask Required</h2>
+      <p>We're sorry, but this website requires MetaMask authentication.</p>
+      <button id="enable-metamask">Enable MetaMask</button>
+    </div>
+  </div>
+
+  <div id="password-modal" class="password-modal" style="display: none;">
+    <div class="password-modal-content">
+      <h2>Enter Password</h2>
+      <input type="password" id="password-input" class="password-input" placeholder="Enter password">
+      <button id="password-submit" class="password-submit">Submit</button>
+    </div>
+  </div>
+
+  <div id="main-content" style="display: none;">
+    <div class="container">
+      <header>
+        <img src="https://websim.creation.engine/logo.svg" id="main-logo" alt="Shop Logo" class="logo">
+        <h1 id="main-title">Exclusive Dark Theme Shop</h1>
+        <div id="wallet-info" class="wallet-info"></div>
+      </header>
+
+      <div class="categories" id="categories"></div>
+
+      <div class="product-grid" id="product-grid"></div>
+
+      <button class="load-more" id="load-more">Load More</button>
+
+      <button class="cart-button" id="cart-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+
+      <button class="order-button" id="order-button" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </button>
+
+      <button class="chat-button" id="chat-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+
+      <div class="popup" id="cart-popup">
+        <h3>Shopping Cart</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total" id="cart-total"></div>
+        <button class="purchase-button" id="purchase-button">Purchase</button>
+        <div id="delivery-address" style="display: none;">
+          <input class="delivery-address" type="text" placeholder="Name">
+          <input class="delivery-address" type="text" placeholder="ZipCode">
+          <input class="delivery-address" type="text" placeholder="Delivery Address Line 1">
+          <input class="delivery-address" type="text" placeholder="Delivery Address Line 2">
+          <input class="delivery-address" type="text" placeholder="Country">
+          <input class="delivery-address" type="text" placeholder="City">
+        </div>
+        <button class="confirm-delivery-button" id="confirm-delivery-button" style="display: none;">Confirm
+          Order</button>
+      </div>
+
+      <div class="popup" id="order-popup">
+        <h3>Order Status</h3>
+        <div id="order-status"></div>
+        <button class="receive-order-button" id="receive-order-button" style="display: none;">Receive Order</button>
+        <div id="rating-container" style="display: none;"></div>
+      </div>
+
+      <div class="chat-popup" id="chat-popup">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="chat-input" placeholder="Type your message...">
+          <button id="chat-send">Send</button>
+        </div>
+      </div>
+
+      <div class="modal" id="delivery-modal">
+        <div class="modal-content">
+          <h3>Order Confirmed!</h3>
+          <div class="delivery-animation"></div>
+          <p>Your order is on its way!</p>
+          <p>Save the json file, you will need it later to unlock your order</p>
+        </div>
+      </div>
+
+      <div class="modal" id="rating-modal">
+        <div class="modal-content">
+          <h3>Thank you for your rating!</h3>
+          <div class="coin"></div>
+          <div class="coin"></div>
+          <div class="coin"></div>
+          <p>You've earned coins for your feedback!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+  <script>
+    let categories = [
+      // 'All', 'Electronics', 'Clothing', 'Books', 'Home & Garden', 'Sports'
+    ];
+    // Get USDT balance (replace with actual USDT contract address on BSC Testnet)
+    let erc20ContractAddress = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'; // Example USDT contract on BSC Testnet
+
+    const erc20abi = [
+      // Read-Only Functions
+      'function balanceOf(address owner) view returns (uint256)',
+      'function decimals() view returns (uint8)',
+      'function symbol() view returns (string)',
+
+      // Authenticated Functions
+      'function transfer(address to, uint amount) returns (bool)',
+
+      // Events
+      'event Transfer(address indexed from, address indexed to, uint amount)',
+    ];
+
+    const exchangeContractAbi = [
+      'function userData() view returns (bytes)',
+      'function wp() view returns (address)',
+      'function decimals() view returns (uint8)',
+      'function buyerOrders(address address) view returns (address)',
+      'function createBuyItemsContract(uint contractValue, uint contractDivider, address paymentContract) external returns (address)'
+    ]
+
+    const buyContractAbi = [
+      'function confirmPurchase(bytes data) external',
+      'function confirmReceived() external',
+      'function rateSeller(uint buyerRating) external',
+      'function balanceOfContract() view returns (uint)',
+      'function price() view returns (uint)',
+      'function state() view returns (uint)',
+      'function deliveryData() view returns (bytes)'
+    ]
+
+    let products = [];
+    let cart = [];
+    let orderKey;
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let selectedCategory = 'All';
+    let currentOrder = null;
+    let provider, signer, address;
+    const q = (new URL(window.location.href)).searchParams.get("q")
+    const n = (new URL(window.location.href)).searchParams.get("n")
+    let json;
+    let decimals = 18;
+    let symbol = "USDC"
+
+    const keyEncAlgo = {
+      name: 'RSA-OAEP',
+    };
+    const payloadKeyEncAlgo = {
+      name: 'AES-GCM',
+      length: 256,
+    };
+    const payloadEncAlgo = {
+      name: 'AES-GCM',
+    };
+
+    async function generateNewKeyPair(
+      seed,
+    ) {
+        const keyPair = (await window.crypto.subtle.generateKey(
+          algo,
+          true,
+          ['encrypt', 'decrypt'],
+        ));
+        const kp = {
+          publicKey: JSON.stringify(
+            await window.crypto.subtle.exportKey(
+              'jwk',
+              keyPair.publicKey,
+            ),
+          ),
+          privateKey: JSON.stringify(
+            await window.crypto.subtle.exportKey(
+              'jwk',
+              keyPair.privateKey,
+            ),
+          ),
+        };
+        return kp;
+    }
+
+    function getHexFromArrayBuffer(array) {
+      const hashArray = Array.from(new Uint8Array(array));
+      const digest = hashArray
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+      return digest;
+    }
+
+    async function encryptAesKey(key, pubKey) {
+      const k = await window.crypto.subtle.importKey(
+        'jwk',
+        pubKey,
+        algo,
+        true,
+        ['encrypt'],
+      );
+      const encoder = new TextEncoder();
+      const encoded = encoder.encode(key);
+      const encrypted = await window.crypto.subtle.encrypt(
+        keyEncAlgo,
+        k,
+        encoded,
+      );
+      return getHexFromArrayBuffer(encrypted);
+    }
+
+    async function decryptAesKey(
+      key,
+      privateKey,
+    ) {
+      try {
+        const k = await window.crypto.subtle.importKey(
+          'jwk',
+          privateKey,
+          algo,
+          true,
+          ['decrypt'],
+        );
+        const encoded = hexToArrayBuffer(key);
+        const decrypted = await window.crypto.subtle.decrypt(
+          keyEncAlgo,
+          k,
+          encoded,
+        );
+        // console.info('decryptedKey', decrypted);
+        const decoder = new TextDecoder();
+        const decode = JSON.parse(decoder.decode(decrypted, {}));
+        // console.info('textdecoder decode', decode);
+        const aesKey = await window.crypto.subtle.importKey(
+          'jwk',
+          decode,
+          payloadKeyEncAlgo,
+          true,
+          ['encrypt', 'decrypt'],
+        );
+        return aesKey;
+      } catch (err) {
+        console.error('decryptkey error', err);
+        throw err;
+      }
+    }
+
+    async function decryptPayload(
+      k,
+      payload,
+      ivb,
+    ) {
+      const iv = hexToArrayBuffer(ivb);
+      const encoded = hexToArrayBuffer(payload);
+      // console.info('encoded into buffer', encoded);
+      const decrypted = await window.crypto.subtle.decrypt(
+        {...payloadEncAlgo, iv},
+        k,
+        encoded,
+      );
+      // console.info('decryptedPayload', decrypted);
+      const decoder = new TextDecoder();
+      const decode = decoder.decode(decrypted);
+      return decode;
+    }
+
+    async function decryptPayloadRaw(
+      k,
+      payload,
+      ivb,
+    ) {
+      const iv = hexToArrayBuffer(ivb);
+      const encoded = payload;
+      // console.info('encoded into buffer', encoded);
+      const decrypted = await window.crypto.subtle.decrypt(
+        {...payloadEncAlgo, iv},
+        k,
+        encoded,
+      );
+      return decrypted;
+      // console.info('decryptedPayload', decrypted);
+      // const decoder = new TextDecoder();
+      // const decode = decoder.decode(decrypted);
+      // return decode;
+    }
+    async function generateAesKey() {
+      const key = await window.crypto.subtle.generateKey(
+        payloadKeyEncAlgo,
+        true,
+        ['encrypt', 'decrypt'],
+      );
+      // console.info('aeskey', key);
+      const kp = JSON.stringify(
+        await window.crypto.subtle.exportKey('jwk', key),
+      );
+      return { kp, key };
+    }
+
+    async function encryptPayload(k, payload) {
+      try {
+        const encoder = new TextEncoder();
+        const encoded = encoder.encode(payload);
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
+        const encrypted = await window.crypto.subtle.encrypt(
+          { ...payloadEncAlgo, iv },
+          k,
+          encoded,
+        );
+        // console.info('encrypted', encrypted);
+        return {
+          encryptedPayload: await getHexFromArrayBuffer(encrypted),
+          iv: await getHexFromArrayBuffer(iv.buffer),
+        };
+      } catch (err) {
+        console.error('encrypt payload err', err);
+        throw err;
+      }
+    }
+
+    const algo = {
+      name: 'RSA-OAEP',
+      modulusLength: 4096,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: 'SHA-256',
+    };
+
+    const address0 = '0x0000000000000000000000000000000000000000';
+
+    const getExchangeContractData = async () => {
+      const exchangeContract = new ethers.Contract(q, exchangeContractAbi, provider);
+      const data = await exchangeContract.userData();
+      erc20ContractAddress = await exchangeContract.wp()
+      decimals = await exchangeContract.decimals()
+      // console.info('data', data)
+      json = await processExchangeContractData(data)
+      if(json.encrypted) {
+        document.getElementById('password-modal').style.display = 'flex';
+      }
+      else initContent(json)
+      // console.info("getExchangeContractData res", json)
+    }
+
+    const processExchangeContractData = async (data) => {
+      const abiCoder = new ethers.utils.AbiCoder();
+      try {
+        const decode = await abiCoder.decode(["string"], data)
+        return JSON.parse(decode);
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    function generateRandomProduct() {
+      const category = categories[Math.floor(Math.random() * (categories.length - 1)) + 1];
+      const id = products.length + 1;
+      return {
+        id,
+        title: `${category} Item ${id}`,
+        price: (Math.random() * 100 + 10).toFixed(2),
+        category,
+        image: `https://picsum.photos/seed/${id}/300/200`
+      };
+    }
+
+    function renderCategories() {
+      const categoriesContainer = document.getElementById('categories');
+      categories.forEach(category => {
+        const chip = document.createElement('div');
+        chip.classList.add('category-chip');
+        chip.textContent = category;
+        chip.addEventListener('click', () => filterByCategory(category));
+        if (category === selectedCategory) {
+          chip.classList.add('active');
+        }
+        categoriesContainer.appendChild(chip);
+      });
+    }
+
+    function renderProducts(productsToRender) {
+      const productGrid = document.getElementById('product-grid');
+      productGrid.innerHTML = '';
+      productsToRender.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+        productCard.innerHTML = `
+                <div>
+                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <h3 class="product-title">${product.title}</h3>
+                </div>
+                <div>
+                <p class="product-price">$${product.price}</p>
+                <button class="add-to-cart" data-id="${product.id}">
+                  Add to Cart
+                </button>
+                </div>
+            `;
+        productGrid.appendChild(productCard);
+      });
+    }
+
+    function loadMoreProducts() {
+      // for (let i = 0; i < itemsPerPage; i++) {
+      //     products.push(generateRandomProduct());
+      // }
+      filterByCategory(selectedCategory);
+      // currentPage++;
+    }
+
+    function filterByCategory(category) {
+      selectedCategory = category;
+      const filteredProducts = category === 'All'
+        ? products
+        : products.filter(product => product.category === category);
+      renderProducts(filteredProducts.slice(0, currentPage * itemsPerPage));
+      updateCategoryChips();
+    }
+
+    function updateCategoryChips() {
+      const chips = document.querySelectorAll('.category-chip');
+      chips.forEach(chip => {
+        if (chip.textContent === selectedCategory) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+    }
+    let total = 0;
+
+    function onRemoveFromCart(e) {
+      console.info("onRemoveFromCart", )
+      const id = this.getAttribute("data-id")
+      const index = parseInt(this.getAttribute("data-index"), 10)
+      cart = cart.filter((c, cIndex)=>cIndex!==index)
+      updateCart()
+
+    }
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      const cartCount = document.getElementById('cart-count');
+      cartItems.innerHTML = '';
+      total = 0;
+
+      cart.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+                <span>${item.title}</span>
+                <span>$${item.price}</span>
+                <span class="crosssign" data-id="${item.id}" data-index="${index}">
+                  <div class="crosssign_circle"></div>
+                  <div class="crosssign_stem"></div>
+                  <div class="crosssign_stem2"></div>
+                </span>
+            `;
+        cartItems.appendChild(cartItem);
+        total += parseFloat(item.price);
+      });
+      document.querySelectorAll('.crosssign').forEach(n=>n.addEventListener("click", onRemoveFromCart))
+
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+      cartCount.textContent = cart.length;
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Add bounce animation to cart button
+      const cartButton = document.getElementById('cart-button');
+      cartButton.classList.add('bounce');
+      setTimeout(() => cartButton.classList.remove('bounce'), 500);
+    }
+
+    function loadCart() {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
+        // console.info('stored cart', cart)
+        updateCart();
+      }
+    }
+
+    function validateAddress(address) {
+      return address && address.trim() !== '';
+    }
+
+    function showRating() {
+      const ratingContainer = document.getElementById('rating-container');
+      ratingContainer.style.display = 'block';
+      ratingContainer.innerHTML = `
+            <h4>Rate your order:</h4>
+            <div class="rating">
+                <span class="star" data-rating="1">&#9733;</span>
+                <span class="star" data-rating="2">&#9733;</span>
+                <span class="star" data-rating="3">&#9733;</span>
+                <span class="star" data-rating="4">&#9733;</span>
+                <span class="star" data-rating="5">&#9733;</span>
+            </div>
+        `;
+
+      ratingContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('star')) {
+          const rating = e.target.getAttribute('data-rating');
+          setRating(rating);
+        }
+      });
+    }
+
+    async function setRating(rating) {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+      // Here you can send the rating to your backend or store it locally
+      console.log(`User rated: ${rating} stars`);
+      const order = await getCurrentOrder()
+      await (await order.rateSeller(rating)).wait(1)
+      // Show rating modal with coins animation
+      showRatingModal();
+
+      // Hide order popup and show cart button after rating
+      setTimeout(() => {
+        document.getElementById('order-popup').style.display = 'none';
+        document.getElementById('cart-button').style.display = 'flex';
+        document.getElementById('order-button').style.display = 'none';
+      }, 3000);
+    }
+
+    function showDeliveryModal() {
+      const modal = document.getElementById('delivery-modal');
+      modal.style.display = 'flex';
+    }
+
+    function showRatingModal() {
+      const modal = document.getElementById('rating-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 3000);
+    }
+
+    document.getElementById('product-grid').addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const productId = e.target.getAttribute('data-id');
+        const product = products.find(p => p.id === productId);
+        cart.push(product);
+        updateCart();
+      }
+    });
+
+    const generateOrderBody = async (nload) => {
+      const abiCoder = new ethers.utils.AbiCoder();
+      const aeskey = await generateAesKey();
+      const keypair = await generateNewKeyPair();
+      nload.publicKey = keypair.publicKey;
+      const payload = await encryptPayload(aeskey.key, JSON.stringify(nload))
+      localStorage.setItem("easkp", JSON.stringify(keypair))
+      const encKey = await encryptAesKey(aeskey.kp, orderKey)
+      const strData = JSON.stringify({ encKey, payload })
+      const data = abiCoder.encode(["string"], [strData])
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(keypair, null, 2)], {
+        type: "text/plain"
+      }));
+      a.setAttribute("download", "orderKey.json");
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // console.info(data, strData)
+      return data;
+    }
+
+    const getCurrentOrder = async () => {
+      const signer = await provider.getSigner();
+      const shop = new ethers.Contract(q, exchangeContractAbi, signer);
+      const prevOrder = await shop.buyerOrders(address)
+      // console.info('currentOrder', prevOrder)
+      if (prevOrder !== address0) {
+        const contract = new ethers.Contract(prevOrder, buyContractAbi, signer);
+        contract.contractAddress = prevOrder;
+        return contract;
+      }
+      return undefined;
+    }
+    
+    const buyItemFromShop = async (
+      value,
+      deliveryAddress
+    ) => {
+      const signer = await provider.getSigner();
+      const shop = new ethers.Contract(q, exchangeContractAbi, signer);
+      const coin = await shop.wp();
+      const nload = {cart, deliveryAddress}
+      console.info('nload', nload)
+      let contract;
+      try {
+        contract = await getCurrentOrder()
+        if (contract) {
+          console.info(contract)
+          const state = ethers.utils.formatUnits(await contract.state(), 10) * 10
+          if(state > 2) {
+            return true;
+          }
+          const {contractAddress} = contract;
+          const balance = ethers.utils.formatUnits(await contract.balanceOfContract(), decimals)
+          const price = ethers.utils.formatUnits(await contract.price(), decimals)
+          // console.info("balance", balance, price, contract, contractAddress)
+          if (balance < price) {
+            const trx = await sendCoin(coin, contractAddress, price - balance);
+          }
+        } else {
+          // console.info('creating a new contract', value)
+          const contractTx = (await (
+            await (
+              await shop.createBuyItemsContract(value, 1, q)
+            ).wait(1)
+          ));
+          contract = await getCurrentOrder()
+          const trx = await sendCoin(coin, contract.contractAddress, value);
+        }
+        const data = await generateOrderBody(nload)
+        const purchase = await (await contract.confirmPurchase(data)).wait(1);
+        return purchase;
+      } catch (err) {
+        console.error(err)
+        alert(err?.data?.message || err.message || err)
+        throw "err"
+      }
+      
+    };
+
+    async function sendCoin(
+      coin,
+      to,
+      valueNum,
+    ) {
+      const erc20 = new ethers.Contract(coin, erc20abi, await provider.getSigner());
+      const amount = ethers.utils.parseUnits(
+        valueNum.toString(),
+        decimals,
+      );
+      const tx = await (await erc20.transfer(to, amount)).wait(1);
+      return tx.hash;
+    }
+
+    document.getElementById('cart-button').addEventListener('click', () => {
+      const cartPopup = document.getElementById('cart-popup');
+      cartPopup.style.display = cartPopup.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('purchase-button').addEventListener('click', async () => 
+      switchOrderStatusToPurchase()
+    );
+
+    const switchOrderStatusToPurchase = () => {
+      document.getElementById('delivery-address').style.display = 'block';
+      document.getElementById('confirm-delivery-button').style.display = 'block';
+      document.getElementById('purchase-button').style.display = 'none';
+    }
+    const switchOrderStatusToDelivery = deliveryAddress => {
+      document.getElementById('order-popup').style.display = 'block';
+      document.getElementById('order-status').innerHTML = `
+                <p>Order Placed</p>
+                <p>Delivery Address: ${deliveryAddress}</p>
+                <p>Status: Processing</p>
+            `;
+      document.getElementById('receive-order-button').style.display = 'block';
+      currentOrder = {
+        items: [...cart],
+        address: deliveryAddress,
+        status: 'Processing'
+      };
+      cart = [];
+      updateCart();
+      document.getElementById('cart-button').style.display = 'none';
+      document.getElementById('order-button').style.display = 'flex';
+    }
+    document.getElementById('confirm-delivery-button').addEventListener('click', async () => {
+      const deliveryAddressD = document.getElementById('delivery-address')
+      let deliveryAddress = ""
+      for (const dd of deliveryAddressD.children) {
+        deliveryAddress += dd.value + ", ";
+      }
+      
+      if (validateAddress(deliveryAddress)) {
+        try {
+          showDeliveryModal();
+          await buyItemFromShop(total, deliveryAddress)
+          document.getElementById('delivery-modal').style.display = 'none';
+          document.getElementById('cart-popup').style.display = 'none';
+          setTimeout(()=>switchOrderStatusToDelivery(deliveryAddress), 300)
+        } catch(err) {
+          alert(err?.data?.message || err?.message || err)
+        }
+      } else {
+        alert('Please enter a valid delivery address');
+      }
+    });
+
+    document.getElementById('order-button').addEventListener('click', () => {
+      const orderPopup = document.getElementById('order-popup');
+      orderPopup.style.display = orderPopup.style.display === 'none' ? 'block' : 'none';
+    });
+
+    const switchOrderStatusToRating = () => {
+      document.getElementById('order-status').innerHTML = `
+            <p>Order Received</p>
+            <p>Delivery Address: ${currentOrder.address}</p>
+            <p>Status: Completed</p>
+        `;
+      document.getElementById('receive-order-button').style.display = 'none';
+      showRating();
+    }
+    const byteToHex = [];
+
+    for (let n = 0; n <= 0xff; ++n)
+    {
+        const hexOctet = n.toString(16).padStart(2, "0");
+        byteToHex.push(hexOctet);
+    }
+    function hex(arrayBuffer)
+    {
+        const buff = new Uint8Array(arrayBuffer);
+        const hexOctets = []; // new Array(buff.length) is even faster (preallocates necessary array size), then use hexOctets[i] instead of .push()
+
+        for (let i = 0; i < buff.length; ++i)
+            hexOctets.push(byteToHex[buff[i]]);
+
+        return hexOctets.join("");
+    }
+    function spliceBuffers(buffers) {
+
+      const len = buffers.map((buffer) => buffer.byteLength).reduce((prevLength, curr) => {return prevLength + curr}, 0);
+
+      const tmp = new Uint8Array(len);
+
+      let bufferOffset = 0;
+
+      for(var i=0; i < buffers.length; i++) {
+        tmp.set(new Uint8Array(buffers[i]), bufferOffset);
+        bufferOffset += buffers[i].byteLength;
+      }
+
+      return tmp;
+    }
+
+    document.getElementById('receive-order-button').addEventListener('click', async () => {
+      try {
+        const order = await getCurrentOrder()
+        const state = ethers.utils.formatUnits(await order.state(), 1) * 10
+        if(state < 2) {
+          alert("Waiting for the order to be delivered")
+          return;
+        }
+        const abiCoder = new ethers.utils.AbiCoder()
+        const deliveryData = JSON.parse(abiCoder.decode(["string"], await order.deliveryData())[0])
+        let localKey = localStorage.getItem("easkp")
+
+        // console.info('deliveryData', deliveryData, localKey)
+        const decryptDeliveryData = async () => {
+          try {
+
+            const key = JSON.parse(JSON.parse(localKey).privateKey)
+            const decryptedKey = await decryptAesKey(deliveryData.encryptedKey, key)
+            const payload = JSON.parse(await decryptPayload(decryptedKey, deliveryData.encryptedPayload, deliveryData.iv))
+            // console.info('dec payload', payload)
+            const decryptPart = async (f) => {
+              const link = "https://ipfs.io/ipfs/"+f.fileLink.IpfsHash
+              const efile = await (await fetch(link)).arrayBuffer()
+              // console.info(efile)
+              const decrypted = await decryptPayloadRaw(decryptedKey, efile, f.iv)
+              // console.info('decrypted', decrypted)
+              return decrypted;
+            }
+            const files = await Promise.all(payload.map(async (f, i)=>{
+              let decrypted = []
+              if(f.name) {
+                decrypted = new File([await decryptPart(f)], {name:f.name})
+              } else {
+                const parts  = await Promise.all(f.map(async ff=>({...ff, decrypted: await decryptPart(ff)})))
+                parts.sort((a,b)=>a.partId - b.partId)
+                const pmap = spliceBuffers(parts.map(p=>p.decrypted))
+                // console.info('parts dec', pmap)
+                decrypted = new File([pmap], {name: parts[0].name})
+              }
+
+              const file = decrypted
+              const a = document.createElement("a");
+              a.href = URL.createObjectURL(file);
+              a.setAttribute("download", f.name || f[0].name);
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }))
+            // console.info('decrypted payload', payload)
+          } catch(err) {
+            console.error('decrypt error', err.message)
+            alert(err?.data?.message || err?.message || err)
+          }
+        }
+        if(localKey) {
+          await decryptDeliveryData()
+        }
+        else {
+          localKey = prompt('please attach the decryption key', '')
+          await decryptDeliveryData()
+        }
+        await order.confirmReceived()
+        switchOrderStatusToRating()
+      } catch(err) {
+        alert(err?.data?.message || err?.message || err)
+      }
+    });
+
+    document.getElementById('load-more').addEventListener('click', loadMoreProducts);
+
+    document.getElementById('chat-button').addEventListener('click', () => {
+      const chatPopup = document.getElementById('chat-popup');
+      chatPopup.style.display = chatPopup.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    document.getElementById('chat-send').addEventListener('click', sendChatMessage);
+
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendChatMessage();
+      }
+    });
+
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (message) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageElement = document.createElement('div');
+        messageElement.textContent = `You: ${message}`;
+        chatMessages.appendChild(messageElement);
+        input.value = '';
+
+        // Simulate shopkeeper response
+        setTimeout(() => {
+          const response = document.createElement('div');
+          response.textContent = `Shopkeeper: Thank you for your message. How can I assist you?`;
+          chatMessages.appendChild(response);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+      }
+    }
+
+    async function checkMetaMask() {
+      if (typeof window.ethereum !== 'undefined') {
+        console.log('MetaMask is installed!');
+        document.getElementById('metamask-modal').style.display = 'none';
+        try {
+          // Request account access
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+          provider = new ethers.providers.Web3Provider(window.ethereum);
+          signer = provider.getSigner();
+          address = await signer.getAddress();
+
+          // Switch to BNB Testnet
+          try {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: n || '0x61' }], // BSC Testnet chain ID
+            });
+
+          } catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask.
+            if (switchError.code === 4902) {
+              try {
+                await window.ethereum.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [{
+                    chainId: n || '0x61',
+                    chainName: 'Binance Smart Chain Testnet',
+                    nativeCurrency: {
+                      name: 'BNB',
+                      symbol: 'bnb',
+                      decimals: 18
+                    },
+                    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                    blockExplorerUrls: ['https://testnet.bscscan.com']
+                  }]
+                });
+              } catch (addError) {
+                console.error('Failed to add the BSC Testnet:', addError);
+              }
+            }
+          }
+
+          await getExchangeContractData()
+          await updateWalletInfo();
+        } catch (error) {
+          console.error('Failed to connect to MetaMask:', error);
+        }
+      } else {
+        console.log('MetaMask is not installed!');
+        document.getElementById('metamask-modal').style.display = 'flex';
+      }
+    }
+
+    async function updateWalletInfo() {
+      const walletInfo = document.getElementById('wallet-info');
+      if (address) {
+        const balance = await provider.getBalance(address);
+        const etherBalance = ethers.utils.formatEther(balance);
+
+        const usdtContract = new ethers.Contract(erc20ContractAddress, erc20abi, provider);
+        const usdtBalance = await usdtContract.balanceOf(address);
+        symbol = await usdtContract.symbol()
+        const usdtBalanceFormatted = ethers.utils.formatUnits(usdtBalance, decimals); // Assuming 18 decimals, adjust if different
+
+        walletInfo.textContent = `Address: ${address.slice(0, 6)}...${address.slice(-4)} | ETH: ${parseFloat(etherBalance).toFixed(4)} | ${symbol}: ${parseFloat(usdtBalanceFormatted).toFixed(2)}`;
+      } else {
+        walletInfo.textContent = 'Wallet not connected';
+      }
+    }
+
+    function getKeyMaterial(password) {
+      const enc = new TextEncoder();
+      return window.crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        "PBKDF2",
+        false,
+        ["deriveBits", "deriveKey"],
+      );
+    }
+
+    function hexToArrayBuffer(hex) {
+      const buff = new Uint8Array(
+        (hex.match(/[\da-f]{2}/gi)).map(function (h) {
+          return parseInt(h, 16);
+        }),
+      );
+      return buff;
+    }
+
+    async function decrypt(password) {
+      const enc = new TextEncoder();
+      const dec = new TextDecoder()
+      const data = hexToArrayBuffer(json.encrypted)
+      const iv = hexToArrayBuffer(json.iv)
+      const keyMaterial = await getKeyMaterial(password);
+      const salt = hexToArrayBuffer(json.salt)
+      const key = await window.crypto.subtle.deriveKey(
+        {
+          name: "PBKDF2",
+          salt,
+          iterations: 100000,
+          hash: "SHA-256",
+        },
+        keyMaterial,
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["encrypt", "decrypt"],
+      );
+      // console.info("before decrypt", key, data, iv)
+      const decrypted = await window.crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+      return JSON.parse(dec.decode(decrypted))
+    }
+    document.getElementById('enable-metamask').addEventListener('click', checkMetaMask);
+
+    function initIndex(decryptedData) {
+      console.info('decrypteData', decryptedData)
+      products = decryptedData.shopProducts
+      categories = ["All", ...new Set(products.map(i => i.category))]
+      orderKey = typeof decryptedData.ordersPubKey === "string" ? JSON.parse(decryptedData.ordersPubKey) : decryptedData.ordersPubKey
+      document.getElementById("main-title").innerHTML = decryptedData.shopName
+      document.getElementById("main-logo").src = decryptedData.shopLogo || ""
+    }
+
+    function initContent(decr) {
+        document.getElementById('password-modal').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        initIndex(decr);
+        init();
+    }
+
+    document.getElementById('password-submit').addEventListener('click', async () => {
+      try {
+        const password = document.getElementById('password-input').value;
+        const decr = await decrypt(password)
+        initContent(decr)
+      } catch (err) {
+        // console.error(err)
+        alert('Incorrect password');
+      }
+    });
+
+    function init() {
+      renderCategories();
+      loadMoreProducts();
+      loadCart();
+      updateWalletInfo();
+      getCurrentOrder().then(async (order)=>{
+        if(order !== undefined) {
+          switchOrderStatusToPurchase()
+          const state = ethers.utils.formatUnits(await order.state(), 1) * 10
+          console.info('order state', state)
+          if(state > 0) {
+            switchOrderStatusToDelivery("")
+          }
+          if(state > 3) {
+            switchOrderStatusToRating("")
+          }
+        }
+      })
+    }
+    checkMetaMask()
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<html><head><base href="https://elitemodels.noir/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noir Elite Models - Exclusive Photo Stock</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+  :root {
+    --primary-color: #f0f0f0;
+    --secondary-color: #0a0a0a;
+    --accent-color: #808080;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  .header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .header.scrolled {
+    padding: 10px 0;
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .header.scrolled .logo {
+    font-size: 2em;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+
+  .nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+  }
+
+  .nav a:hover::after {
+    width: 100%;
+  }
+
+  .main-content {
+    padding-top: 100px;
+  }
+
+  .fullscreen-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-item-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-item-info {
+    transform: translateY(0);
+  }
+
+  .model-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    margin: 0;
+  }
+
+  .model-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .model-popup.active {
+    opacity: 1;
+  }
+
+  .popup-content {
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #1a1a1a;
+    padding: 20px;
+    position: relative;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .model-popup.active .popup-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .close-popup:hover {
+    color: var(--accent-color);
+  }
+
+  .model-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .model-gallery img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .model-gallery img:hover {
+    opacity: 0.7;
+  }
+
+  .cart-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+  }
+
+  .cart-icon:hover {
+    color: var(--accent-color);
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ff4444;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+  }
+
+  .cart-popup {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 300px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 20px;
+    z-index: 1002;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .cart-popup.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+  }
+
+  .cart-total {
+    text-align: right;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    text-align: center;
+    text-decoration: none;
+    margin-top: 20px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .checkout-btn:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+  }
+</style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container">
+      <div class="logo">Noir Elite Models</div>
+      <nav class="nav">
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒 <span class="cart-count">0</span>
+  </div>
+
+  <div class="cart-popup" id="cartPopup">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">Total: $<span id="cartTotal">0</span></div>
+    <a href="#" class="checkout-btn">Checkout</a>
+  </div>
+
+  <main class="main-content">
+    <section id="gallery" class="fullscreen-gallery">
+      <!-- Gallery items will be dynamically added here -->
+    </section>
+  </main>
+
+  <div id="modelPopup" class="model-popup">
+    <div class="popup-content">
+      <span class="close-popup" onclick="closePopup()">&times;</span>
+      <h2 id="popupModelName"></h2>
+      <div class="model-gallery" id="modelGallery"></div>
+    </div>
+  </div>
+
+  <script>
+    const models = [
+      { name: 'Amelie', images: 8 },
+      { name: 'Victor', images: 7 },
+      { name: 'Sophia', images: 9 },
+      { name: 'Marcus', images: 6 },
+      { name: 'Olivia', images: 8 },
+      { name: 'Ethan', images: 7 },
+      { name: 'Isabella', images: 9 },
+      { name: 'Lucas', images: 6 }
+    ];
+
+    let cart = [];
+
+    function generateGallery() {
+      const gallery = document.querySelector('.fullscreen-gallery');
+      models.forEach((model, index) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `
+          <img src="https://example.com/model${index + 1}.jpg" alt="${model.name}" loading="lazy">
+          <div class="gallery-item-info">
+            <h3 class="model-name">${model.name}</h3>
+          </div>
+        `;
+        item.onclick = () => openPopup(model);
+        gallery.appendChild(item);
+      });
+    }
+
+    function openPopup(model) {
+      document.getElementById('popupModelName').textContent = model.name;
+      const modelPopup = document.getElementById('modelPopup');
+      modelPopup.style.display = 'block';
+      setTimeout(() => modelPopup.classList.add('active'), 50);
+      
+      const gallery = document.getElementById('modelGallery');
+      gallery.innerHTML = '';
+      
+      for (let i = 1; i <= model.images; i++) {
+        const img = document.createElement('img');
+        img.src = `https://example.com/${model.name.toLowerCase()}${i}.jpg`;
+        img.alt = `${model.name} - Photo ${i}`;
+        img.onclick = () => addToCart(model.name, i, Math.floor(Math.random() * 200) + 100);
+        gallery.appendChild(img);
+      }
+    }
+
+    function closePopup() {
+      const modelPopup = document.getElementById('modelPopup');
+      modelPopup.classList.remove('active');
+      setTimeout(() => modelPopup.style.display = 'none', 300);
+    }
+
+    function addToCart(modelName, photoNumber, price) {
+      cart.push({ modelName, photoNumber, price });
+      updateCartIcon();
+      updateCartPopup();
+    }
+
+    function updateCartIcon() {
+      const cartCount = document.querySelector('.cart-count');
+      cartCount.textContent = cart.length;
+    }
+
+    function updateCartPopup() {
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <span>${item.modelName} - Photo ${item.photoNumber}</span>
+          <span>$${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItems.appendChild(cartItem);
+        total += item.price;
+      });
+
+      cartTotal.textContent = total;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartIcon();
+      updateCartPopup();
+    }
+
+    function toggleCart() {
+      const cartPopup = document.getElementById('cartPopup');
+      cartPopup.classList.toggle('active');
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      generateGallery();
+    });
+  </script>
+</body>
+</html>
