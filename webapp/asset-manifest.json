@@ -11,7 +11,7 @@
     "849.js": "/849.js",
     "733.js": "/733.js",
     "86.js": "/86.js",
-    "727.js": "/727.js",
+    "186.js": "/186.js",
     "MaterialCommunityIcons.ttf": "/n01_5d42b4e60858731e7b65_.ttf",
     "sqlite3.wasm": "/n01_4df5e7af1d8a6b183755_.wasm",
     "Ionicons.ttf": "/n01_9b6b1954a5eb6efeaf11_.ttf",
@@ -26,7 +26,7 @@
   "entrypoints": [
     "849.js",
     "86.js",
-    "727.js",
+    "186.js",
     "main.js"
   ]
 }
