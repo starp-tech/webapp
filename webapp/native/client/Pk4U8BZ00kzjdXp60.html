@@ -1,0 +1,462 @@
+<html><head><base href="https://noir-elite-models.com/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Noir Elite Models | Exclusive Photo Stock</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+    :root {
+        --bg-color: #0a0a0a;
+        --text-color: #f0f0f0;
+        --accent-color: #808080;
+        --hover-color: #a0a0a0;
+        --timeline-color: #303030;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+    }
+    
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background-color: rgba(10, 10, 10, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+    
+    .category-filter {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .category-btn {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+    
+    .category-btn:hover, .category-btn.active {
+        color: var(--hover-color);
+    }
+    
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 5rem 1rem 1rem;
+    }
+    
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3/4;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+        transform: scale(1.05);
+    }
+    
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%);
+        transition: filter 0.3s ease;
+    }
+    
+    .gallery-item:hover img {
+        filter: grayscale(0%);
+    }
+    
+    .gallery-item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .gallery-item:hover .gallery-item-overlay {
+        opacity: 1;
+    }
+    
+    .gallery-item-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .gallery-item-category {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+    }
+    
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    .modal.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    .modal-content {
+        background: var(--bg-color);
+        padding: 2rem;
+        border-radius: 5px;
+        max-width: 90%;
+        max-height: 90%;
+        overflow-y: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .modal-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .modal-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+    
+    .modal-details {
+        flex: 1;
+    }
+    
+    .modal-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .modal-category {
+        font-size: 1rem;
+        color: var(--accent-color);
+    }
+    
+    .timeline {
+        margin-top: 2rem;
+        padding-left: 2rem;
+        border-left: 2px solid var(--timeline-color);
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        padding-left: 1rem;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -2.4rem;
+        top: 0;
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+    }
+    
+    .timeline-date {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .timeline-image {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+    }
+    
+    .timeline-description {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .add-to-cart-btn {
+        background: var(--accent-color);
+        color: var(--bg-color);
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        align-self: flex-start;
+        margin-top: 1rem;
+    }
+    
+    .add-to-cart-btn:hover {
+        background: var(--hover-color);
+    }
+    
+    .cart-icon {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: var(--accent-color);
+        color: var(--bg-color);
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 101;
+        transition: transform 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        background: var(--hover-color);
+        color: var(--bg-color);
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    
+    @keyframes addToCart {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .cart-animation {
+        animation: addToCart 0.5s ease;
+    }
+</style></head><body>
+    <header class="header">
+        <div class="logo">NOIR ELITE</div>
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="fashion">Fashion</button>
+            <button class="category-btn" data-category="editorial">Editorial</button>
+            <button class="category-btn" data-category="commercial">Commercial</button>
+        </div>
+    </header>
+
+    <div class="gallery" id="gallery">
+        <!-- Gallery items will be dynamically added here -->
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <img class="modal-image" src="" alt="">
+                <div class="modal-details">
+                    <h2 class="modal-name"></h2>
+                    <p class="modal-category"></p>
+                </div>
+            </div>
+            <div class="timeline" id="timeline">
+                <!-- Timeline items will be dynamically added here -->
+            </div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('modal');
+        const modalImage = modal.querySelector('.modal-image');
+        const modalName = modal.querySelector('.modal-name');
+        const modalCategory = modal.querySelector('.modal-category');
+        const timeline = document.getElementById('timeline');
+        const addToCartBtn = modal.querySelector('.add-to-cart-btn');
+        const cartCount = document.querySelector('.cart-count');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        const models = [
+            { 
+                name: 'Alexandra', 
+                category: 'fashion', 
+                image: 'https://via.placeholder.com/400x600.png?text=Alexandra',
+                timeline: [
+                    { date: '2023-06-01', image: 'https://via.placeholder.com/800x600.png?text=Alexandra+Fashion+Shoot', description: 'Latest fashion shoot for summer collection.' },
+                    { date: '2023-05-15', image: 'https://via.placeholder.com/800x600.png?text=Alexandra+Magazine+Cover', description: 'Featured on the cover of Vogue magazine.' },
+                    { date: '2023-04-22', image: 'https://via.placeholder.com/800x600.png?text=Alexandra+Runway', description: 'Walking the runway at Paris Fashion Week.' }
+                ]
+            },
+            { 
+                name: 'Ethan', 
+                category: 'editorial', 
+                image: 'https://via.placeholder.com/400x600.png?text=Ethan',
+                timeline: [
+                    { date: '2023-05-30', image: 'https://via.placeholder.com/800x600.png?text=Ethan+Editorial', description: 'Artistic black and white editorial for GQ.' },
+                    { date: '2023-05-10', image: 'https://via.placeholder.com/800x600.png?text=Ethan+Campaign', description: 'New campaign for luxury watch brand.' },
+                    { date: '2023-04-05', image: 'https://via.placeholder.com/800x600.png?text=Ethan+Portrait', description: 'Portrait series exploring masculinity.' }
+                ]
+            },
+            { 
+                name: 'Sophia', 
+                category: 'commercial', 
+                image: 'https://via.placeholder.com/400x600.png?text=Sophia',
+                timeline: [
+                    { date: '2023-06-05', image: 'https://via.placeholder.com/800x600.png?text=Sophia+Commercial', description: 'New skincare line commercial shoot.' },
+                    { date: '2023-05-20', image: 'https://via.placeholder.com/800x600.png?text=Sophia+Billboard', description: 'Times Square billboard reveal.' },
+                    { date: '2023-04-15', image: 'https://via.placeholder.com/800x600.png?text=Sophia+Product+Launch', description: 'Exclusive product launch event hosting.' }
+                ]
+            },
+        ];
+
+        function createGalleryItem(model) {
+            const item = document.createElement('div');
+            item.classList.add('gallery-item');
+            item.dataset.category = model.category;
+            item.innerHTML = `
+                <img src="${model.image}" alt="${model.name}">
+                <div class="gallery-item-overlay">
+                    <h3 class="gallery-item-name">${model.name}</h3>
+                    <p class="gallery-item-category">${model.category}</p>
+                </div>
+            `;
+            item.addEventListener('click', () => openModal(model));
+            return item;
+        }
+
+        function populateGallery() {
+            models.forEach(model => {
+                gallery.appendChild(createGalleryItem(model));
+            });
+        }
+
+        function openModal(model) {
+            modalImage.src = model.image;
+            modalImage.alt = model.name;
+            modalName.textContent = model.name;
+            modalCategory.textContent = model.category;
+            populateTimeline(model.timeline);
+            modal.classList.add('active');
+        }
+
+        function populateTimeline(timelineData) {
+            timeline.innerHTML = '';
+            timelineData.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.classList.add('timeline-item');
+                timelineItem.innerHTML = `
+                    <p class="timeline-date">${item.date}</p>
+                    <img class="timeline-image" src="${item.image}" alt="${item.description}">
+                    <p class="timeline-description">${item.description}</p>
+                `;
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function addToCart() {
+            let count = parseInt(cartCount.textContent);
+            cartCount.textContent = ++count;
+            cartCount.classList.add('cart-animation');
+            setTimeout(() => {
+                cartCount.classList.remove('cart-animation');
+            }, 500);
+        }
+
+        function filterGallery(category) {
+            const items = gallery.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        populateGallery();
+
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+        addToCartBtn.addEventListener('click', addToCart);
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterGallery(btn.dataset.category);
+            });
+        });
+    </script>
+</body></html>

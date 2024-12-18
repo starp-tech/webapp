@@ -1,17 +1,15 @@
 {
   "files": {
     "main.js": "/main.js",
-    "24.js": "/24.js",
+    "790.js": "/790.js",
     "252.js": "/252.js",
     "209.js": "/209.js",
     "349.js": "/349.js",
-    "358.js": "/358.js",
+    "52.js": "/52.js",
     "528.js": "/528.js",
     "65.js": "/65.js",
-    "849.js": "/849.js",
+    "516.js": "/516.js",
     "733.js": "/733.js",
-    "86.js": "/86.js",
-    "186.js": "/186.js",
     "MaterialCommunityIcons.ttf": "/n01_5d42b4e60858731e7b65_.ttf",
     "sqlite3.wasm": "/n01_4df5e7af1d8a6b183755_.wasm",
     "Ionicons.ttf": "/n01_9b6b1954a5eb6efeaf11_.ttf",
@@ -20,13 +18,9 @@
     "favicon-32.png": "/favicon-32.png",
     "manifest.json": "/manifest.json",
     "favicon-16.png": "/favicon-16.png",
-    "../web-build/serve.json": "/../web-build/serve.json",
     "javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/n01_1feff74faaf0efc6a044_"
   },
   "entrypoints": [
-    "849.js",
-    "86.js",
-    "186.js",
     "main.js"
   ]
 }
