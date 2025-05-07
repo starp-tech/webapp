@@ -28,8 +28,6 @@ object-assign
 
 /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
 /*! scure-base - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
 /*! scure-bip39 - MIT License (c) 2022 Patricio Palladino, Paul Miller (paulmillr.com) */
