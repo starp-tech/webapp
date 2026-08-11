@@ -1,2 +1,3 @@
 #!/bin/sh
-http-server --proxy "${FFMPEGLAB_HOST-http://localhost:8080/webapp/?}" .
+envsubst < /usr/share/nginx/html/config_template.json > /usr/share/nginx/html/webapp/config.json
+nginx -g 'daemon off;'

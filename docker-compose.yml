@@ -1,0 +1,18 @@
+services:
+  ffmpeglab-ide:
+    image: ffmpeglab/ide
+    ports:
+      - "${FFMPEGLAB_UI_PORT}:80"
+    environment:
+      - FFMPEGLAB_API=${FFMPEGLAB_API}
+      - FFMPEGLAB_API_KEY=${FFMPEGLAB_API_KEY}
+      - EVOLU_DB_HOST=${EVOLU_HOST}
+      - EVOLU_DB_NAME=ffmpeglab
+      - PEXELS_API_HOST=https://pexels.starpy.me/
+      - SUPABASE_HOST=${SUPABASE_HOST}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+
+  ffmpeglab-evolu:
+    image: evoluhq/evolu:pr-5
+    ports:
+      - "4000:4000"

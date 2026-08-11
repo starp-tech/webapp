@@ -1,11 +1,19 @@
-FROM node:22-alpine
+FROM nginx:alpine
 
-RUN mkdir -p /home/node/app
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /home/node/app/
+COPY webapp /usr/share/nginx/html/webapp
 
-COPY . .
+COPY templates.json /usr/share/nginx/html/webapp/templates.json
 
-RUN npm i -g http-server
+COPY config_template.json /usr/share/nginx/html
 
-CMD ["./entrypoint.sh"]
+COPY entrypoint.sh /usr/share/nginx/html
+
+EXPOSE 80
+
+STOPSIGNAL SIGQUIT
+
+WORKDIR /usr/share/nginx/html
+
+ENTRYPOINT ["/usr/share/nginx/html/entrypoint.sh"]
